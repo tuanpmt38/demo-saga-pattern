@@ -1,0 +1,59 @@
+server:
+  port: 8083
+  max-http-header-size: 1024KB
+
+spring:
+  application:
+    name: test_debt_service
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/debt?useSSL=false&useUnicode=true&characterEncoding=UTF-8
+    username: postgres
+    password: 123456
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 100
+      idle-timeout: 60000
+      connection-timeout: 30000
+      max-lifetime: 1800000
+      connection-test-query: SELECT 1
+
+  jpa:
+    show-sql: false
+    open-in-view: true
+    hibernate:
+      ddl-auto: none
+      naming:
+        physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+        implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
+
+    properties:
+      hibernate:
+        jdbc:
+          batch_size: 200
+          batch_versioned_data: true
+          lob:
+            non_contextual_creation: true
+        order_inserts: true
+        order_updates: true
+        use_sql_comments: true
+        format_sql: true
+        enable_lazy_load_no_trans: true
+      org:
+        hibernate:
+          envers:
+            do_not_audit_optimistic_locking_field: false
+
+  liquibase:
+    enabled: true
+
+  cloud:
+    stream:
+      default-binder: kafka
+      kafka:
+        binder:
+          brokers:
+            - localhost:9092
+      bindings:
+        agency-service:
+          group: debt-service
