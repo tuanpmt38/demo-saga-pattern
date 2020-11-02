@@ -1,39 +1,40 @@
 package com.example.demo.entity;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedStoredProcedureQuery;
+import javax.persistence.ParameterMode;
+import javax.persistence.StoredProcedureParameter;
 import javax.persistence.Table;
-import java.io.Serializable;
-import java.math.BigDecimal;
 
 /**
- * Created by TuanPM on 2020-10-22.
+ * Created by TuanPM on 2020-11-02.
  **/
+@Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-@Builder
-@Table(name = "odr_order")
-public class Order implements Serializable {
+@Table(name = "car")
+public class Car {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column
+    private long id;
 
-    private BigDecimal preTotalAmount;
+    @Column
+    private String model;
 
-    private BigDecimal vat;
-
-    private BigDecimal totalAmount;
+    @Column
+    private Integer year;
 
 }
